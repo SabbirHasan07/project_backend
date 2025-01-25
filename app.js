@@ -1,10 +1,11 @@
 const express = require('express');
 const mysql = require('mysql2');
+const cors = require('cors'); 
 
 const app = express();
 const port = 3000;
 
-// MySQL connection pool configuration
+
 const pool = mysql.createPool({
   host: 'srv1667.hstgr.io',
   user: 'u474521097_project_user',
@@ -15,17 +16,20 @@ const pool = mysql.createPool({
   queueLimit: 0,
 });
 
-// Test the database connection
+
+app.use(cors());
+
+
 pool.getConnection((err, connection) => {
   if (err) {
     console.error('Database connection failed:', err);
     return;
   }
   console.log('Connected to the MySQL database');
-  connection.release(); // Release the connection back to the pool
+  connection.release(); 
 });
 
-// Sample route to fetch data from the database
+
 app.get('/data', (req, res) => {
   pool.query('SELECT * FROM requests', (err, results) => {
     if (err) {
@@ -37,7 +41,7 @@ app.get('/data', (req, res) => {
   });
 });
 
-// Start the server
+
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
