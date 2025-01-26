@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 
 const app = express();
 const port = 3000;
-app.use(cors());
+app.use(cors({origin: '*'}));
 const pool = mysql.createPool({
   host: 'srv1667.hstgr.io',
   user: 'u474521097_project_user',
